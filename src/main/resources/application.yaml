@@ -1,0 +1,10 @@
+spring:
+  ai:
+    openai:
+      api-key: "sk-"
+      base-url: "https://api.agicto.cn"
+      chat:
+        options:
+          model: "gpt-4o-mini"
+server:
+  port: 8000
