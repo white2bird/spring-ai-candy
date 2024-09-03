@@ -7,6 +7,7 @@ import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty;
 import org.springframework.boot.context.properties.EnableConfigurationProperties;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.web.client.RestTemplate;
 
 /**
  * @author yiming@micous.com
@@ -19,7 +20,7 @@ public class CustomChatModelConfiguration {
 
     @Bean
     @ConditionalOnProperty(value = "candy.ai.deepseek.enable", havingValue = "true")
-    public ChatModel deepSeekChatModel(AiProperties aiProperties){
+    public ChatModel deepSeekChatModel(AiProperties aiProperties, RestTemplate restTemplate){
         AiProperties.DeepSeekProperties deepseek = aiProperties.getDeepseek();
         DeepSeekChatOptions options = DeepSeekChatOptions.builder()
                 .model(deepseek.getModel())
@@ -27,7 +28,7 @@ public class CustomChatModelConfiguration {
                 .maxTokens(deepseek.getMaxTokens())
                 .topP(deepseek.getTopP())
                 .build();
-        return new DeepSeekChatModel(deepseek.getApiKey(), options);
+        return new DeepSeekChatModel(deepseek.getApiKey(), options, restTemplate);
 
     }
 }

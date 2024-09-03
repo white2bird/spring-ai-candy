@@ -15,10 +15,14 @@ import org.springframework.ai.model.ModelOptionsUtils;
 import org.springframework.ai.openai.OpenAiChatOptions;
 import org.springframework.ai.openai.api.OpenAiApi;
 import org.springframework.ai.retry.RetryUtils;
+import org.springframework.http.MediaType;
+import org.springframework.http.RequestEntity;
 import org.springframework.http.ResponseEntity;
 import org.springframework.retry.support.RetryTemplate;
+import org.springframework.web.client.RestTemplate;
 import reactor.core.publisher.Flux;
 
+import java.net.URI;
 import java.util.List;
 import java.util.Map;
 
@@ -42,21 +46,25 @@ public class DeepSeekChatModel implements ChatModel {
 
     private final OpenAiApi openAiApi;
 
-    public DeepSeekChatModel(String apiKey, DeepSeekChatOptions deepSeekChatOptions, RetryTemplate retryTemplate){
+    private final RestTemplate restTemplate;
+
+    public DeepSeekChatModel(String apiKey, DeepSeekChatOptions deepSeekChatOptions, RetryTemplate retryTemplate, RestTemplate restTemplate){
         Assert.notEmpty(apiKey, "api key 不能为空");
         Assert.notNull(deepSeekChatOptions, "option 不能为空");
         Assert.notNull(retryTemplate, "retryTemplate 不能为空");
         this.openAiApi = new OpenAiApi(BASE_URL, apiKey);
         this.defaultOption = deepSeekChatOptions;
         this.retryTemplate = retryTemplate;
+        this.restTemplate = restTemplate;
     }
 
     public DeepSeekChatModel(String apiKey){
-        this(apiKey, DeepSeekChatOptions.builder().model(MODEL_DEFAULT).build());
+        this(apiKey, DeepSeekChatOptions.builder().model(MODEL_DEFAULT).build(), null);
     }
 
-    public DeepSeekChatModel(String apiKey, DeepSeekChatOptions deepSeekChatOptions){
-        this(apiKey, deepSeekChatOptions, RetryUtils.DEFAULT_RETRY_TEMPLATE);
+    public DeepSeekChatModel(String apiKey, DeepSeekChatOptions deepSeekChatOptions, RestTemplate restTemplate){
+        this(apiKey, deepSeekChatOptions, RetryUtils.DEFAULT_RETRY_TEMPLATE, restTemplate);
+
     }
 
 
@@ -89,29 +97,50 @@ public class DeepSeekChatModel implements ChatModel {
     public Flux<ChatResponse> stream(Prompt prompt) {
         OpenAiApi.ChatCompletionRequest chatCompletionRequest = createRequest(prompt, true);
         return this.retryTemplate.execute(ctx->{
-            Flux<OpenAiApi.ChatCompletionChunk> chatCompletionChunkFlux = openAiApi.chatCompletionStream(chatCompletionRequest);
-            return chatCompletionChunkFlux.map(chunk->{
-                String id = chunk.id();
-                List<Generation> generations = chunk.choices().stream().map(choice -> {
-                            String finish = (choice.finishReason() != null ? choice.finishReason().name() : "");
-                            String role = (choice.delta().role() != null ? choice.delta().role().name() : "");
-                            if (choice.finishReason() == OpenAiApi.ChatCompletionFinishReason.STOP) {
-                                // 兜底处理 DeepSeek 返回 STOP 时，role 为空的情况
-                                role = OpenAiApi.ChatCompletionMessage.Role.ASSISTANT.name();
-                            }
-                            Generation generation = new Generation(choice.delta().content(),
-                                    Map.of("id", id, "role", role, "finishReason", finish));
-                            if (choice.finishReason() != null) {
-                                generation = generation.withGenerationMetadata(
-                                        ChatGenerationMetadata.from(choice.finishReason().name(), null));
-                            }
-                            return generation;
-                        }
-                ).toList();
-                return new ChatResponse(generations);
-            });
+            String body = "{\"model\":\"deepseek-chat\",\"messages\":[{\"role\":\"system\",\"content\":\"You are a helpful assistant.\"},{\"role\":\"user\",\"content\":\"Hello!\"}],\"stream\":false}";
+            RequestEntity<String> requestEntity = RequestEntity
+                    .post(URI.create(BASE_URL + "/chat/completions"))
+//                        .header("Custom-Header", "value")
+                    .contentType(MediaType.APPLICATION_JSON)
+                    .body(body);
+            ResponseEntity<String> exchange = restTemplate.exchange(requestEntity, String.class);
+            return null;
+//            Flux<OpenAiApi.ChatCompletionChunk> chatCompletionChunkFlux = openAiApi.chatCompletionStream(chatCompletionRequest);
+//            return chatCompletionChunkFlux.map(chunk->{
+//
+//
+//
+//            });
         });
     }
+
+//    @Override
+//    public Flux<ChatResponse> stream(Prompt prompt) {
+//        OpenAiApi.ChatCompletionRequest chatCompletionRequest = createRequest(prompt, true);
+//        return this.retryTemplate.execute(ctx->{
+//            Flux<OpenAiApi.ChatCompletionChunk> chatCompletionChunkFlux = openAiApi.chatCompletionStream(chatCompletionRequest);
+//            return chatCompletionChunkFlux.map(chunk->{
+//                String id = chunk.id();
+//                List<Generation> generations = chunk.choices().stream().map(choice -> {
+//                            String finish = (choice.finishReason() != null ? choice.finishReason().name() : "");
+//                            String role = (choice.delta().role() != null ? choice.delta().role().name() : "");
+//                            if (choice.finishReason() == OpenAiApi.ChatCompletionFinishReason.STOP) {
+//                                // 兜底处理 DeepSeek 返回 STOP 时，role 为空的情况
+//                                role = OpenAiApi.ChatCompletionMessage.Role.ASSISTANT.name();
+//                            }
+//                            Generation generation = new Generation(choice.delta().content(),
+//                                    Map.of("id", id, "role", role, "finishReason", finish));
+//                            if (choice.finishReason() != null) {
+//                                generation = generation.withGenerationMetadata(
+//                                        ChatGenerationMetadata.from(choice.finishReason().name(), null));
+//                            }
+//                            return generation;
+//                        }
+//                ).toList();
+//                return new ChatResponse(generations);
+//            });
+//        });
+//    }
 
     private Generation buildGeneration(OpenAiApi.ChatCompletion.Choice choice, Map<String, Object> metadata) {
         var assistantMessage = new AssistantMessage(choice.message().content(), metadata, List.of());

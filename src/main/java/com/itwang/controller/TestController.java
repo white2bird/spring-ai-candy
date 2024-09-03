@@ -3,6 +3,8 @@ package com.itwang.controller;
 import com.itwang.model.DeepSeek.DeepSeekChatModel;
 import jakarta.annotation.Resource;
 import org.springframework.ai.chat.model.ChatModel;
+import org.springframework.ai.chat.model.ChatResponse;
+import org.springframework.ai.chat.prompt.Prompt;
 import org.springframework.ai.openai.OpenAiChatModel;
 import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -25,13 +27,13 @@ public class TestController {
 
 
     @GetMapping(value = "/stream", produces = MediaType.TEXT_EVENT_STREAM_VALUE)
-    public Flux<String> stream(@RequestParam("model") String model) {
+    public Flux<ChatResponse> stream(@RequestParam("model") String model) {
 
         ChatModel chatModel = chatModelMap.get(model);
         if(chatModel == null){
             chatModel = chatModelMap.get(MODEL);
         }
-        return chatModel.stream("讲一个笑话")
+        return chatModel.stream(new Prompt("讲一个笑话"))
                 .doOnNext(System.out::println);
 
     }
