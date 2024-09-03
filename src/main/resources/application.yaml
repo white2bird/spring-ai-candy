@@ -8,3 +8,9 @@ spring:
           model: "gpt-4o-mini"
 server:
   port: 8000
+candy:
+  ai:
+    deepseek:
+      enable: "true"
+      api-key: "sk-"
+
