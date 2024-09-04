@@ -1,4 +1,4 @@
-package com.itwang.config;
+package com.itwang.properties;
 
 import lombok.Data;
 import org.springframework.boot.context.properties.ConfigurationProperties;

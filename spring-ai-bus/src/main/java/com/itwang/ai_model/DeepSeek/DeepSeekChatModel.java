@@ -1,4 +1,4 @@
-package com.itwang.model.DeepSeek;
+package com.itwang.ai_model.DeepSeek;
 
 import cn.hutool.core.collection.CollUtil;
 import cn.hutool.core.lang.Assert;
@@ -22,7 +22,7 @@ import reactor.core.publisher.Flux;
 import java.util.List;
 import java.util.Map;
 
-import static com.itwang.model.DeepSeek.DeepSeekChatOptions.MODEL_DEFAULT;
+import static com.itwang.ai_model.DeepSeek.DeepSeekChatOptions.MODEL_DEFAULT;
 
 /**
  * @author yiming@micous.com

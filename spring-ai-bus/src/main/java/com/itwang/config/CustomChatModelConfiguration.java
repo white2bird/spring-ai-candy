@@ -1,7 +1,8 @@
 package com.itwang.config;
 
-import com.itwang.model.DeepSeek.DeepSeekChatModel;
-import com.itwang.model.DeepSeek.DeepSeekChatOptions;
+import com.itwang.ai_model.DeepSeek.DeepSeekChatModel;
+import com.itwang.ai_model.DeepSeek.DeepSeekChatOptions;
+import com.itwang.properties.AiProperties;
 import org.springframework.ai.chat.model.ChatModel;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty;
 import org.springframework.boot.context.properties.EnableConfigurationProperties;

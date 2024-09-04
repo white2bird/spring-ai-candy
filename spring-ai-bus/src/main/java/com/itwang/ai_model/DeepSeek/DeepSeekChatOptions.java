@@ -1,4 +1,4 @@
-package com.itwang.model.DeepSeek;
+package com.itwang.ai_model.DeepSeek;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
 import lombok.AllArgsConstructor;
