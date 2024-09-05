@@ -11,6 +11,8 @@
     <modules>
         <module>spring-ai-common</module>
         <module>spring-ai-bus</module>
+        <module>spring-ai-gateway</module>
+        <module>spring-ai-auth</module>
     </modules>
 
     <parent>
@@ -24,6 +26,8 @@
         <maven.compiler.source>17</maven.compiler.source>
         <maven.compiler.target>17</maven.compiler.target>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+        <satoken.version>1.39.0</satoken.version>
+        <spring-cloud.version>2023.0.2</spring-cloud.version>
     </properties>
 
     <dependencyManagement>
@@ -36,10 +40,34 @@
                 <scope>import</scope>
             </dependency>
 
+
+            <dependency>
+                <groupId>org.springframework.cloud</groupId>
+                <artifactId>spring-cloud-dependencies</artifactId>
+                <version>${spring-cloud.version}</version>
+                <type>pom</type>
+                <scope>import</scope>
+            </dependency>
+
+
             <dependency>
                 <groupId>cn.hutool</groupId>
                 <artifactId>hutool-all</artifactId>
                 <version>5.8.27</version>
+            </dependency>
+
+
+            <dependency>
+                <groupId>cn.dev33</groupId>
+                <artifactId>sa-token-reactor-spring-boot3-starter</artifactId>
+                <version>${satoken.version}</version>
+            </dependency>
+
+            <!-- Sa-Token 整合 Redis （使用 jackson 序列化方式） -->
+            <dependency>
+                <groupId>cn.dev33</groupId>
+                <artifactId>sa-token-redis-jackson</artifactId>
+                <version>${satoken.version}</version>
             </dependency>
         </dependencies>
     </dependencyManagement>
@@ -62,6 +90,7 @@
             </releases>
         </repository>
     </repositories>
+
 
 
     <build>

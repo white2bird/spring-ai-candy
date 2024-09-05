@@ -89,13 +89,11 @@ public class TestController {
 
     @GetMapping(value = "/stream", produces = MediaType.TEXT_EVENT_STREAM_VALUE)
     public Flux<ChatResponse> stream(@RequestParam("model") String model) {
-
         ChatModel chatModel = chatModelMap.get(model);
         if(chatModel == null){
             chatModel = chatModelMap.get(MODEL);
         }
-        return chatModel.stream(new Prompt("讲一个笑话"))
-                .doOnNext(res->{throw new IllegalArgumentException();});
+        return chatModel.stream(new Prompt("讲一个笑话"));
 
     }
 

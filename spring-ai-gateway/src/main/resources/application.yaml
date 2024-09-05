@@ -1,19 +1,20 @@
 spring:
-  ai:
-    openai:
-      api-key: "sk-"
-      base-url: "https://api.agicto.cn"
-      chat:
-        options:
-          model: "gpt-4o-mini"
-server:
-  port: 8000
-candy:
-  ai:
-    deepseek:
-      enable: "true"
-      api-key: "sk-c47ff1d99f6b4e408cf4cfa04cec1e3c"
+  config:
+    import: classpath:redis.yaml
 
+  cloud:
+    gateway:
+      routes:
+        - id: front
+          uri: http://localhost:8000
+          predicates:
+            - Path=/front/**
+          filters:
+            - StripPrefix=1
+
+logging:
+  level:
+    root: info
 
 # satoken配置
 sa-token:
