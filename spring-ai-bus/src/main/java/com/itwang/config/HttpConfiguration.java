@@ -1,16 +1,30 @@
 package com.itwang.config;
 
-import org.springframework.context.annotation.Bean;
+import cn.dev33.satoken.interceptor.SaInterceptor;
+import cn.dev33.satoken.stp.StpUtil;
 import org.springframework.context.annotation.Configuration;
-import org.springframework.http.HttpRequest;
-import org.springframework.http.client.ClientHttpRequestExecution;
-import org.springframework.http.client.ClientHttpRequestInterceptor;
-import org.springframework.http.client.ClientHttpResponse;
-import org.springframework.web.client.RestTemplate;
+import org.springframework.web.servlet.config.annotation.InterceptorRegistry;
+import org.springframework.web.servlet.config.annotation.ResourceHandlerRegistry;
+import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 
-import java.io.IOException;
-
+/**
+ * @author yiming@micous.com
+ * @date 2024/9/5 15:27
+ */
 @Configuration
-public class HttpConfiguration{
+public class HttpConfiguration implements WebMvcConfigurer {
+
+    @Override
+    public void addInterceptors(InterceptorRegistry registry) {
+        registry.addInterceptor(new SaInterceptor(handle -> StpUtil.checkLogin()))
+                .addPathPatterns("/**")
+                // 放行如下接口 不进行登录审核
+                .excludePathPatterns("/user/login", "/user/register")
+                .excludePathPatterns("/swagger/**", "/v3/**", "/doc.html")
+                .excludePathPatterns("/favicon.ico")
+                .excludePathPatterns("/webjars/**")
+                ;
+    }
+
 
 }

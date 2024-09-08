@@ -11,10 +11,22 @@ spring:
             - Path=/front/**
           filters:
             - StripPrefix=1
+        - id: auth
+          uri: http://localhost:8081
+          predicates:
+            - Path=/auth/**
+          filters:
+            - StripPrefix=1
 
 logging:
   level:
     root: info
+
+key: "123456"
+
+url:
+  white_list:
+    - /login
 
 # satoken配置
 sa-token:

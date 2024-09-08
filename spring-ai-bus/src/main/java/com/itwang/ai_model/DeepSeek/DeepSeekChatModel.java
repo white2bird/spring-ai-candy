@@ -32,6 +32,7 @@ public class DeepSeekChatModel implements ChatModel {
     /**
      * 模型api
      */
+//    private static final String BASE_URL = "http://127.0.0.1:3000";
     private static final String BASE_URL = "https://api.deepseek.com";
 
     private Logger logger = LoggerFactory.getLogger(DeepSeekChatModel.class);

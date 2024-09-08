@@ -1,4 +1,4 @@
-package com.itwang.reponse;
+package com.itwang.response;
 
 import io.swagger.v3.oas.annotations.media.Schema;
 import lombok.Data;

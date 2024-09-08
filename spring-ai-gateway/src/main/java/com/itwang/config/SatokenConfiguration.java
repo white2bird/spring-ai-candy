@@ -15,7 +15,7 @@ import org.springframework.context.annotation.Configuration;
 @Configuration
 public class SatokenConfiguration {
 
-    @Bean
+//    @Bean
     public SaReactorFilter getSaReactorFilter() {
         return new SaReactorFilter()
                 // 拦截地址

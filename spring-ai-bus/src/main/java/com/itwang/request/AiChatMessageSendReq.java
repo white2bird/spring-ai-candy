@@ -23,4 +23,12 @@ public class AiChatMessageSendReq {
 
     @Schema(description = "是否携带上下文", example = "true")
     private Boolean useContext;
+
+    @Schema(description = "模型类型")
+    @NotEmpty(message = "模型类型不能为空")
+    private String modelType;
+
+    @Schema(description = "模型名称")
+    @NotEmpty(message = "模型名称不能为空")
+    private String modelName;
 }

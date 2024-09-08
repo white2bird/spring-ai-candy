@@ -1,5 +1,6 @@
 package com.itwang.controller;
 
+import cn.dev33.satoken.annotation.SaCheckLogin;
 import com.itwang.ai_model.DeepSeek.DeepSeekChatModel;
 import jakarta.annotation.Resource;
 import lombok.extern.slf4j.Slf4j;
@@ -59,6 +60,7 @@ public class TestController {
         return result;
     }
 
+    @SaCheckLogin
     @GetMapping("/getPersonList")
     Flux<String> getPersonList() {
         return Flux.just("jiaduo", "zhailuxu", "guoheng")
@@ -88,12 +90,12 @@ public class TestController {
 
 
     @GetMapping(value = "/stream", produces = MediaType.TEXT_EVENT_STREAM_VALUE)
-    public Flux<ChatResponse> stream(@RequestParam("model") String model) {
+    public Flux<ChatResponse> stream(@RequestParam("model") String model, @RequestParam("msg") String msg) {
         ChatModel chatModel = chatModelMap.get(model);
         if(chatModel == null){
             chatModel = chatModelMap.get(MODEL);
         }
-        return chatModel.stream(new Prompt("讲一个笑话"));
+        return chatModel.stream(new Prompt(msg));
 
     }
 

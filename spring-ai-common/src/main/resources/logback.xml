@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<configuration>
+    <!-- 定义日志的根目录 -->
+    <property name="LOG_HOME" value="./logs" />
+
+    <!-- 引入Spring的profile概念，根据不同环境调整日志级别 -->
+    <springProfile name="dev">
+        <root level="INFO"/>
+    </springProfile>
+    <springProfile name="prod">
+        <root level="INFO"/>
+    </springProfile>
+
+    <!-- 日志格式，包括日期，日志级别，进程ID，线程名，Logger名，消息 -->
+    <!-- 添加X-B3-TraceId用于分布式跟踪 -->
+    <property name="FILE_LOG_PATTERN" value="%d{yyyy-MM-dd HH:mm:ss.SSS} [%thread] %-5level %logger{36} [%X{traceId}] - %msg%n"/>
+
+    <!-- 控制台输出 -->
+    <appender name="CONSOLE" class="ch.qos.logback.core.ConsoleAppender">
+        <encoder>
+            <pattern>${FILE_LOG_PATTERN}</pattern>
+        </encoder>
+    </appender>
+
+    <!-- 文件输出，每天滚动，保存最近7天的日志，之前的压缩存储 -->
+    <appender name="FILE" class="ch.qos.logback.core.rolling.RollingFileAppender">
+        <file>${LOG_HOME}/app.log</file>
+        <encoder>
+            <pattern>${FILE_LOG_PATTERN}</pattern>
+        </encoder>
+        <rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
+            <!-- 日志文件的位置和生成格式 -->
+            <fileNamePattern>${LOG_HOME}/archived/app.%d{yyyy-MM-dd}.%i.log.zip</fileNamePattern>
+            <!-- 日志文件保存周期 -->
+            <timeBasedFileNamingAndTriggeringPolicy class="ch.qos.logback.core.rolling.SizeAndTimeBasedFNATP">
+                <maxFileSize>100MB</maxFileSize>
+            </timeBasedFileNamingAndTriggeringPolicy>
+            <!-- 保留历史日志一个星期 -->
+            <maxHistory>7</maxHistory>
+            <!-- 也支持在日志文件上限之后的总大小限制 -->
+            <totalSizeCap>1GB</totalSizeCap>
+        </rollingPolicy>
+    </appender>
+
+    <!-- 日志的根输出，可以根据不同环境调整(如上定义的profile) -->
+    <root level="INFO">
+        <appender-ref ref="CONSOLE" />
+        <appender-ref ref="FILE" />
+    </root>
+</configuration>

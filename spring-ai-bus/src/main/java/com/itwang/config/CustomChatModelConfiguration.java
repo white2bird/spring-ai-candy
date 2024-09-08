@@ -20,6 +20,11 @@ import org.springframework.context.annotation.Configuration;
 public class CustomChatModelConfiguration {
 
 
+    /**
+     * 接入deepseek大模型
+     * @param aiProperties
+     * @return
+     */
     @Bean
     @ConditionalOnProperty(value = "candy.ai.deepseek.enable", havingValue = "true")
     public ChatModel deepSeekChatModel(AiProperties aiProperties){
