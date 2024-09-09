@@ -7,10 +7,12 @@ import com.itwang.common.result.CommonResult;
 import com.itwang.common.utils.AiUtils;
 import com.itwang.common.utils.BeanUtils;
 import com.itwang.dao.entity.AiChatMessage;
+import com.itwang.dao.entity.AiChatModel;
 import com.itwang.request.AiChatMessageSendReq;
 import com.itwang.response.AiChatMessageSendResponse;
 import com.itwang.service.AiChatMessageService;
 import jakarta.annotation.Resource;
+import org.springframework.ai.chat.messages.MessageType;
 import org.springframework.ai.chat.model.ChatModel;
 import org.springframework.ai.chat.prompt.ChatOptions;
 import org.springframework.ai.chat.prompt.Prompt;
@@ -56,7 +58,9 @@ public class AiChatMessageServiceImpl implements AiChatMessageService {
     }
 
 
-    private AiChatMessage createChatMessage(Long conversationId, Long replyId){
+    private AiChatMessage createChatMessage(Long conversationId, Long replyId, AiChatModel aiChatModel, Long userId,
+                                            Long roleId, MessageType messageType, String content, Boolean useContext){
+
         return null;
     }
 }

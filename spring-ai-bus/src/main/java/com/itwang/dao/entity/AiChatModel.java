@@ -114,9 +114,4 @@ public class AiChatModel implements Serializable {
     @TableField("deleted")
     private Boolean deleted;
 
-    /**
-     * 租户编号
-     */
-    @TableField("tenant_id")
-    private Long tenantId;
 }
