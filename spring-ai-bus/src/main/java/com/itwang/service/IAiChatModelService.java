@@ -16,4 +16,6 @@ public interface IAiChatModelService extends IService<AiChatModel> {
 
     Long createChatModel(AiChatModelSaveRequest saveRequest);
 
+    AiChatModel getDefaultChatModel();
+
 }

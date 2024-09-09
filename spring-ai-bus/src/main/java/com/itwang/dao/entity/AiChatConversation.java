@@ -4,6 +4,8 @@ import com.baomidou.mybatisplus.annotation.*;
 
 import java.io.Serializable;
 import java.time.LocalDateTime;
+
+import lombok.Builder;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -17,8 +19,11 @@ import lombok.Setter;
  */
 @Getter
 @Setter
+@Builder
 @TableName("ai_chat_conversation")
 public class AiChatConversation implements Serializable {
+
+    public static final String TITLE_DEFAULT = "新对话";
 
     private static final long serialVersionUID = 1L;
 

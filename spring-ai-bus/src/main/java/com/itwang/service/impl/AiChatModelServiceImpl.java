@@ -1,5 +1,6 @@
 package com.itwang.service.impl;
 
+import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import com.itwang.converter.AiModelConverter;
 import com.itwang.dao.entity.AiChatModel;
 import com.itwang.dao.mapper.AiChatModelMapper;
@@ -23,10 +24,23 @@ public class AiChatModelServiceImpl extends ServiceImpl<AiChatModelMapper, AiCha
     @Resource
     private AiModelConverter aiModelConverter;
 
+    @Resource
+    private AiChatModelMapper aiChatModelMapper;
+
     @Override
     public Long createChatModel(AiChatModelSaveRequest saveRequest) {
         AiChatModel aiChatModel = aiModelConverter.convert(saveRequest);
         this.save(aiChatModel);
         return aiChatModel.getId();
+    }
+
+    @Override
+    public AiChatModel getDefaultChatModel() {
+        // TODO 常亮
+        AiChatModel chatModel = aiChatModelMapper.selectFirstByStatus(1);
+        if(chatModel == null){
+            throw new RuntimeException("未存在可用默认模型");
+        }
+        return chatModel;
     }
 }
