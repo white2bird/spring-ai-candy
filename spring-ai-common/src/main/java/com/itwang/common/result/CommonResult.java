@@ -2,6 +2,7 @@ package com.itwang.common.result;
 
 import cn.hutool.core.lang.Assert;
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonProperty;
 import com.itwang.common.constants.GlobalErrorCodeConstants;
 import com.itwang.common.exception.ErrorCode;
 import com.itwang.common.exception.ServiceException;
@@ -25,6 +26,7 @@ public class CommonResult<T> implements Serializable {
     /**
      * 数据
      */
+    @JsonProperty("data")
     private T data;
 
     /**

@@ -133,7 +133,7 @@ public class AiChatMessageServiceImpl implements AiChatMessageService {
                 continue;
             }
             AiChatMessage userMessage = CollUtil.get(aiChatMessages, index - 1);
-            if(userMessage == null || ObjUtil.notEqual(assistantChatMessage.getReplyId(), chatConversation.getId()) || StrUtil.isEmpty(assistantChatMessage.getContent())){
+            if(userMessage == null || ObjUtil.notEqual(assistantChatMessage.getReplyId(), userMessage.getId()) || StrUtil.isEmpty(assistantChatMessage.getContent())){
                 continue;
             }
             contextChatMessages.add(assistantChatMessage);

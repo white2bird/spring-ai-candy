@@ -24,7 +24,7 @@ public class AiUtils {
 
     public static Message buildMessage(String type, String content){
         if(MessageType.USER.getValue().equals(type)){
-            return new UserMessage(type);
+            return new UserMessage(content);
         } else if(MessageType.SYSTEM.getValue().equals(type)){
             return new SystemMessage(content);
         } else if (MessageType.ASSISTANT.getValue().equals(type)){
