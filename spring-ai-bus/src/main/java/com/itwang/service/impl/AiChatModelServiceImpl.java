@@ -43,4 +43,13 @@ public class AiChatModelServiceImpl extends ServiceImpl<AiChatModelMapper, AiCha
         }
         return chatModel;
     }
+
+    @Override
+    public AiChatModel validateChatModel(Long id) {
+        AiChatModel chatModel = this.getOne(new LambdaQueryWrapper<AiChatModel>().eq(AiChatModel::getId, id));
+        if(chatModel == null){
+            throw new RuntimeException("未找到模型");
+        }
+        return chatModel;
+    }
 }

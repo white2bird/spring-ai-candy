@@ -36,7 +36,7 @@ public class AiChatRole implements Serializable {
     private String name;
 
     /**
-     * 头像
+     * 头像 默认可null
      */
     @TableField("avatar")
     private String avatar;
@@ -54,37 +54,37 @@ public class AiChatRole implements Serializable {
     private Byte status;
 
     /**
-     * 角色排序
+     * 角色排序 暂时不需要
      */
     @TableField("sort")
     private Integer sort;
 
     /**
-     * 用户编号
+     * 用户编号 暂时不需要用户自己建立
      */
     @TableField("user_id")
     private Long userId;
 
     /**
-     * 是否公开
+     * 是否公开 默认公开
      */
     @TableField("public_status")
     private Boolean publicStatus;
 
     /**
-     * 角色类别
+     * 角色类别 默认为自定义
      */
     @TableField("category")
     private String category;
 
     /**
-     * 模型编号
+     * 模型编号 角色可以指定默认模型 如果没有指定默认模型
      */
     @TableField("model_id")
     private Long modelId;
 
     /**
-     * 角色上下文
+     * 角色上下文 一段描述 你是谁谁谁，你应该怎么样
      */
     @TableField("system_message")
     private String systemMessage;

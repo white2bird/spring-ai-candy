@@ -20,4 +20,8 @@ public interface IAiChatConversationService extends IService<AiChatConversation>
     Long createChatConversationMy(AiChatConversationCreateRequest createReqVO, Long userId);
 
     List<AiChatConversationRespVO> getMyConversationList(Long chatRoleId);
+
+    AiChatConversationRespVO getCurrentConversation(Long id);
+
+    AiChatConversation validateConversation(Long conversationId);
 }

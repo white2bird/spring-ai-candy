@@ -49,7 +49,7 @@ public class AiChatModel implements Serializable {
     private String model;
 
     /**
-     * 模型平台
+     * 模型平台 冗余字段
      */
     @TableField("platform")
     private String platform;

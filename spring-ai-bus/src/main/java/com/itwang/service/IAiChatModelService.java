@@ -18,4 +18,6 @@ public interface IAiChatModelService extends IService<AiChatModel> {
 
     AiChatModel getDefaultChatModel();
 
+    AiChatModel validateChatModel(Long id);
+
 }

@@ -58,7 +58,7 @@ public class AiChatConversation implements Serializable {
     private Long modelId;
 
     /**
-     * 模型标识
+     * 模型标识 aiChatModel模型冗余 具体使用模型
      */
     @TableField("model")
     private String model;

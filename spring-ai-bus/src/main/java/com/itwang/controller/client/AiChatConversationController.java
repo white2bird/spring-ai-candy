@@ -44,10 +44,16 @@ public class AiChatConversationController {
      * 寻找该模版下面发生的对话
      * @return
      */
-    @GetMapping("/list-my")
+    @GetMapping("/list-by-roleId")
     @Operation(summary = "获取我的聊天列表")
-    public CommonResult<List<AiChatConversationRespVO>> getMyConversationList(@RequestParam Long chatRoleId){
+    public CommonResult<List<AiChatConversationRespVO>> getMyConversationList(@RequestParam(required = false) Long chatRoleId){
         return CommonResult.success(aiChatConversationService.getMyConversationList(chatRoleId));
+    }
+
+    @GetMapping("/get-current")
+    @Operation(summary = "获取当前对话")
+    public CommonResult<AiChatConversationRespVO> getCurrentConversation(@RequestParam Long id){
+        return CommonResult.success(aiChatConversationService.getCurrentConversation(id));
     }
 
 }

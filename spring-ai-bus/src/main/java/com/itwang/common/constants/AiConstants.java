@@ -1,15 +1,20 @@
 package com.itwang.common.constants;
 
+
 import com.itwang.ai_model.DeepSeek.DeepSeekChatModel;
+import lombok.Getter;
 import org.springframework.ai.openai.OpenAiChatModel;
 
 import java.beans.Introspector;
 
 public class AiConstants {
 
+
+
     /**
      * 用户类型
      */
+    @Getter
     public enum UserType{
 
         NORMAL(0),
@@ -20,34 +25,33 @@ public class AiConstants {
             this.code = code;
         }
 
-        public int getCode() {
-            return code;
-        }
     }
 
-    /**
-     * ai平台枚举
-     */
-    public enum AiPlatform{
-        OPENAI(Introspector.decapitalize(OpenAiChatModel.class.getSimpleName())),
-        DEEP_SEEK(Introspector.decapitalize(DeepSeekChatModel.class.getSimpleName()));
+    @Getter
+    public enum AiPlatformEnum{
+        OPENAI("OpenAI", "OpenAI", Introspector.decapitalize(OpenAiChatModel.class.getSimpleName())),
+        DEEP_SEEK("DeepSeek", "DeepSeek", Introspector.decapitalize(DeepSeekChatModel.class.getSimpleName()));
 
-        private final String code;
-        AiPlatform(String code){
-            this.code = code;
+        private final String platform;
+
+        private final String name;
+
+        private final String className;
+
+
+        AiPlatformEnum(String platform, String name, String className) {
+            this.platform = platform;
+            this.name = name;
+            this.className = className;
         }
 
-        public String getCode() {
-            return code;
-        }
-
-        public static AiPlatform getByModel(String model){
-            for(var item:values()){
-                if(item.equals(model)){
-                    return item;
+        public static AiPlatformEnum getAiPlatformEnum(String platform) {
+            for (AiPlatformEnum value : AiPlatformEnum.values()) {
+                if (value.getPlatform().equals(platform)) {
+                    return value;
                 }
             }
-            throw new IllegalArgumentException("Invalid AiPlatform code: " + model);
+            throw new IllegalArgumentException("Invalid AiPlatform code: " + platform);
         }
     }
 }

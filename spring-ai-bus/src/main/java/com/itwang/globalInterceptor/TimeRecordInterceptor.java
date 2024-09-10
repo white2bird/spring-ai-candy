@@ -1,5 +1,6 @@
 package com.itwang.globalInterceptor;
 
+import cn.dev33.satoken.stp.StpUtil;
 import cn.hutool.core.date.StopWatch;
 import cn.hutool.core.util.StrUtil;
 import jakarta.servlet.http.HttpServletRequest;
@@ -22,7 +23,7 @@ public class TimeRecordInterceptor implements HandlerInterceptor, Ordered {
 
     @Override
     public int getOrder() {
-        return Integer.MIN_VALUE;
+        return 100;
     }
 
     @Override
@@ -32,6 +33,7 @@ public class TimeRecordInterceptor implements HandlerInterceptor, Ordered {
         traceId = StrUtil.isEmpty(traceId) ? UUID.randomUUID().toString() : traceId;
         MDC.put("traceId", traceId);
         StopWatch stopWatch = new StopWatch();
+        log.info("当前登陆用户 --- {}", StpUtil.getLoginIdAsLong());
         // 设置上下文
         request.setAttribute("stopWatch", stopWatch);
         stopWatch.start();
