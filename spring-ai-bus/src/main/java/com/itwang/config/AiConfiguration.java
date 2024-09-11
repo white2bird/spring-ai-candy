@@ -24,8 +24,8 @@ public class AiConfiguration implements WebMvcConfigurer {
 
     @Override
     public void addInterceptors(InterceptorRegistry registry) {
-        registry.addInterceptor(new TimeRecordInterceptor()).addPathPatterns("/**")
-                .excludePathPatterns("/favicon.ico");
+//        registry.addInterceptor(new TimeRecordInterceptor()).addPathPatterns("/**")
+//                .excludePathPatterns("/favicon.ico");
     }
 
     @Bean

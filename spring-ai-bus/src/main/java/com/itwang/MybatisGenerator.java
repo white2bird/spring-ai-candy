@@ -29,6 +29,7 @@ public class MybatisGenerator {
                         .xml("mappers")
                 )
                 .strategyConfig(builder -> builder
+                        .controllerBuilder().enableRestStyle()
                         .entityBuilder()
                         .enableLombok()
                         .enableTableFieldAnnotation()

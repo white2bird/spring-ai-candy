@@ -68,7 +68,7 @@ public class AiChatMessageServiceImpl implements AiChatMessageService {
             throw new RuntimeException("当前用户没有权限访问该对话");
         }
 
-        List<AiChatMessage> chatMessageList = aiChatMessageMapper.getChatMessageList(chatConversation.getId());
+        List<AiChatMessage> chatMessageList = sendReqVO.getUseContext() ? aiChatMessageMapper.getChatMessageList(chatConversation.getId()) : Collections.emptyList();
         // 获取相关的模型
         AiChatModel aiChatModel = chatModelService.validateChatModel(chatConversation.getModelId());
         StreamingChatModel chatModel = aiApiKeyService.getChatModel(aiChatModel.getKeyId());

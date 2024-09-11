@@ -13,7 +13,7 @@ import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.RestController;
 import reactor.core.publisher.Flux;
 
 /**
@@ -24,8 +24,8 @@ import reactor.core.publisher.Flux;
  * @author lmz
  * @since 2024-09-08
  */
-@Controller
-@RequestMapping("/ai/chat/message")
+@RestController
+@RequestMapping(value = "/ai/chat/message")
 public class AiChatMessageController {
 
     @Resource
