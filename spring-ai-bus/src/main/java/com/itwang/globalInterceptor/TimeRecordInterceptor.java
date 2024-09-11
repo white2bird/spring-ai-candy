@@ -29,7 +29,8 @@ public class TimeRecordInterceptor implements HandlerInterceptor {
         traceId = StrUtil.isEmpty(traceId) ? UUID.randomUUID().toString() : traceId;
         MDC.put("traceId", traceId);
         StopWatch stopWatch = new StopWatch();
-        log.info("当前登陆用户 --- {}", StpUtil.getLoginIdAsLong());
+
+        log.info("当前登陆用户 --- {}", StpUtil.isLogin() ? StpUtil.getLoginIdAsLong() : "none");
         // 设置上下文
         request.setAttribute("stopWatch", stopWatch);
         stopWatch.start();
