@@ -2,9 +2,9 @@ package com.itwang.config;
 
 import cn.dev33.satoken.interceptor.SaInterceptor;
 import cn.dev33.satoken.stp.StpUtil;
+import com.itwang.globalInterceptor.TimeRecordInterceptor;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.web.servlet.config.annotation.InterceptorRegistry;
-import org.springframework.web.servlet.config.annotation.ResourceHandlerRegistry;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 
 /**
@@ -24,6 +24,8 @@ public class HttpConfiguration implements WebMvcConfigurer {
                 .excludePathPatterns("/favicon.ico")
                 .excludePathPatterns("/webjars/**")
                 ;
+
+        registry.addInterceptor(new TimeRecordInterceptor());
     }
 
 

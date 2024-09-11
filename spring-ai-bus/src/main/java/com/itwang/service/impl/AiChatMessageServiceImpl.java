@@ -19,6 +19,7 @@ import com.itwang.service.IAiApiKeyService;
 import com.itwang.service.IAiChatConversationService;
 import com.itwang.service.IAiChatModelService;
 import jakarta.annotation.Resource;
+import org.slf4j.MDC;
 import org.springframework.ai.chat.messages.Message;
 import org.springframework.ai.chat.messages.MessageType;
 import org.springframework.ai.chat.messages.SystemMessage;
@@ -78,6 +79,7 @@ public class AiChatMessageServiceImpl implements AiChatMessageService {
                 userId, chatConversation.getRoleId(), MessageType.ASSISTANT, "", sendReqVO.getUseContext());
 
         Prompt prompt = buildPrompt(chatConversation, chatMessageList, aiChatModel, sendReqVO);
+        String traceId = MDC.get("traceId");
         StringBuffer contentBuffer = new StringBuffer();
         return chatModel.stream(prompt).map(chunk->{
             String content = chunk.getResult() != null ? chunk.getResult().getOutput().getContent() : null;
@@ -88,8 +90,8 @@ public class AiChatMessageServiceImpl implements AiChatMessageService {
 //            .send(BeanUtils.toBean(userMessage, AiChatMessageSendResponse.Message.class))
             return CommonResult.success(AiChatMessageSendResponse.builder()
                     .receive(responseMsg).build());
-        }).doOnNext(System.out::println)
-                .doOnComplete(()->{
+        }).doOnComplete(()->{
+            MDC.put("traceId", traceId);
             aiChatMessageMapper.updateById(AiChatMessage.builder().id(assistantMessage.getId()).content(contentBuffer.toString()).build());
         }).doOnError(throwable->{
             aiChatMessageMapper.updateById(AiChatMessage.builder().id(assistantMessage.getId()).content(throwable.getMessage()).build());

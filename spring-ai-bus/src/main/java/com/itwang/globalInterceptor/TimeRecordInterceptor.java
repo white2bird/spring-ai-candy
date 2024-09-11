@@ -19,12 +19,8 @@ import java.util.concurrent.TimeUnit;
  * @date 2024/9/5 15:08
  */
 @Slf4j
-public class TimeRecordInterceptor implements HandlerInterceptor, Ordered {
+public class TimeRecordInterceptor implements HandlerInterceptor {
 
-    @Override
-    public int getOrder() {
-        return 100;
-    }
 
     @Override
     public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object handler) throws Exception {
@@ -55,5 +51,6 @@ public class TimeRecordInterceptor implements HandlerInterceptor, Ordered {
             watch.stop();
             log.info("request --- {} ---- take time {} {}", requestURI, watch.shortSummary(TimeUnit.SECONDS), Thread.currentThread().getName());
         }
+        MDC.clear();
     }
 }

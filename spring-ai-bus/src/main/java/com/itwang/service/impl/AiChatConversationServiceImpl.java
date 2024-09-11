@@ -1,5 +1,6 @@
 package com.itwang.service.impl;
 
+import cn.dev33.satoken.stp.StpUtil;
 import cn.hutool.core.lang.Assert;
 import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import com.itwang.converter.AiChatConversationConverter;
@@ -75,10 +76,11 @@ public class AiChatConversationServiceImpl extends ServiceImpl<AiChatConversatio
     @Override
     public List<AiChatConversationRespVO> getMyConversationList(Long chatRoleId) {
         // 默认查出非指定角色的
+        long userId = StpUtil.getLoginIdAsLong();
         if(chatRoleId == null){
-            return aiChatConversationConverter.convertList(this.list(new LambdaQueryWrapper<AiChatConversation>().isNull(AiChatConversation::getRoleId)));
+            return aiChatConversationConverter.convertList(this.list(new LambdaQueryWrapper<AiChatConversation>().isNull(AiChatConversation::getRoleId).eq(AiChatConversation::getUserId, userId)));
         }
-        List<AiChatConversation> result = this.list(new LambdaQueryWrapper<AiChatConversation>().eq(AiChatConversation::getRoleId, chatRoleId));
+        List<AiChatConversation> result = this.list(new LambdaQueryWrapper<AiChatConversation>().eq(AiChatConversation::getRoleId, chatRoleId).eq(AiChatConversation::getUserId, userId));
         return aiChatConversationConverter.convertList(result);
     }
 

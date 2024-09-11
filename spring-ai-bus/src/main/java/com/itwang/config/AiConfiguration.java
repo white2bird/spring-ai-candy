@@ -20,13 +20,7 @@ import javax.sql.DataSource;
  * @date 2024/9/5 15:33
  */
 @Configuration
-public class AiConfiguration implements WebMvcConfigurer {
-
-    @Override
-    public void addInterceptors(InterceptorRegistry registry) {
-//        registry.addInterceptor(new TimeRecordInterceptor()).addPathPatterns("/**")
-//                .excludePathPatterns("/favicon.ico");
-    }
+public class AiConfiguration {
 
     @Bean
     public PasswordEncoder passwordEncoder() {
