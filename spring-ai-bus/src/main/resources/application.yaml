@@ -10,11 +10,11 @@ spring:
     password: 123456
   ai:
     openai:
-      api-key: "sk-"
-      base-url: "https://api.agicto.cn"
+      api-key: "sk-12314324234qwerqwe"
+      base-url: "https://gpt.oret1930.workers.dev"
       chat:
         options:
-          model: "gpt-4o-mini"
+          model: "gpt-4o"
   cache:
     redis:
       key-prefix: "ai_cache"

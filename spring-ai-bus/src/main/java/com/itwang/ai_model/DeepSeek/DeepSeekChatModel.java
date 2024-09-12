@@ -2,6 +2,7 @@ package com.itwang.ai_model.DeepSeek;
 
 import cn.hutool.core.collection.CollUtil;
 import cn.hutool.core.lang.Assert;
+import lombok.ToString;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.ai.chat.messages.AssistantMessage;
@@ -28,6 +29,7 @@ import static com.itwang.ai_model.DeepSeek.DeepSeekChatOptions.MODEL_DEFAULT;
  * @author yiming@micous.com
  * @date 2024/9/3 14:32
  */
+@ToString
 public class DeepSeekChatModel implements ChatModel {
     /**
      * 模型api

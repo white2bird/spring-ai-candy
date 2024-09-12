@@ -19,6 +19,7 @@ import com.itwang.service.IAiApiKeyService;
 import com.itwang.service.IAiChatConversationService;
 import com.itwang.service.IAiChatModelService;
 import jakarta.annotation.Resource;
+import lombok.extern.slf4j.Slf4j;
 import org.slf4j.MDC;
 import org.springframework.ai.chat.messages.Message;
 import org.springframework.ai.chat.messages.MessageType;
@@ -30,12 +31,13 @@ import org.springframework.ai.chat.prompt.Prompt;
 import org.springframework.stereotype.Service;
 import reactor.core.publisher.Flux;
 
-import java.beans.Introspector;
+
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
 
+@Slf4j
 @Service
 public class AiChatMessageServiceImpl implements AiChatMessageService {
 
@@ -68,6 +70,7 @@ public class AiChatMessageServiceImpl implements AiChatMessageService {
         // 获取相关的模型
         AiChatModel aiChatModel = chatModelService.validateChatModel(chatConversation.getModelId());
         StreamingChatModel chatModel = aiApiKeyService.getChatModel(aiChatModel.getKeyId());
+        log.info("-----当前使用模型-------- {}", chatModel);
 
         AiChatMessage userMessage = createChatMessage(chatConversation.getId(), null, aiChatModel, userId, chatConversation.getRoleId(), MessageType.USER, sendReqVO.getContent(), sendReqVO.getUseContext());
         AiChatMessage assistantMessage = createChatMessage(chatConversation.getId(), userMessage.getId(), aiChatModel,
