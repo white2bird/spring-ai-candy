@@ -51,11 +51,6 @@ public class AiChatMessageServiceImpl implements AiChatMessageService {
     @Resource
     private IAiChatModelService chatModelService;
 
-    /**
-     * 兜底模型
-     */
-    private static final String DEFAULT_MODEL = Introspector.decapitalize(DeepSeekChatModel.class.getSimpleName());
-
     @Override
     public AiChatMessageSendResponse sendMessage(AiChatMessageSendReq sendReq, Long userId) {
         return null;

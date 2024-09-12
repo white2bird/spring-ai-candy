@@ -2,6 +2,7 @@ package com.itwang.dao.mapper;
 
 import com.itwang.dao.entity.AiApiKey;
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
+import org.springframework.cache.annotation.Cacheable;
 
 /**
  * <p>

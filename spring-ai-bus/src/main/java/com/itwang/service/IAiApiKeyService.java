@@ -15,4 +15,6 @@ import org.springframework.ai.chat.model.ChatModel;
 public interface IAiApiKeyService extends IService<AiApiKey> {
 
     ChatModel getChatModel(Long id);
+
+    AiApiKey getApiKeyByIdWithCache(Long id);
 }

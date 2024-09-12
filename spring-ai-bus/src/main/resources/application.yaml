@@ -1,4 +1,6 @@
 spring:
+  profiles:
+    active: dev
   config:
     import: classpath:redis.yaml
   datasource:
@@ -13,6 +15,11 @@ spring:
       chat:
         options:
           model: "gpt-4o-mini"
+  cache:
+    redis:
+      key-prefix: "ai_cache"
+
+
 server:
   port: 8000
 candy:
