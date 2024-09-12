@@ -1,0 +1,12 @@
+
+
+
+logging:
+  config: classpath:logback.xml
+
+  level:
+    com.itwang.dao.mapper: debug
+    org.apache.ibatis: debug
+mybatis-plus:
+  configuration:
+    log-impl: org.apache.ibatis.logging.stdout.StdOutImpl
