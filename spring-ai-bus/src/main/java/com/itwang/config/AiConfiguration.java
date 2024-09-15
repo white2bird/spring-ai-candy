@@ -1,6 +1,5 @@
 package com.itwang.config;
 
-import com.itwang.globalInterceptor.TimeRecordInterceptor;
 import com.zaxxer.hikari.HikariDataSource;
 import org.springframework.boot.autoconfigure.cache.CacheProperties;
 import org.springframework.boot.autoconfigure.jdbc.DataSourceProperties;
@@ -19,8 +18,6 @@ import org.springframework.jdbc.datasource.DataSourceTransactionManager;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.transaction.TransactionManager;
-import org.springframework.web.servlet.config.annotation.InterceptorRegistry;
-import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 
 import javax.sql.DataSource;
 

@@ -25,10 +25,6 @@ public class TimeRecordInterceptor implements HandlerInterceptor {
     @Override
     public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object handler) throws Exception {
         // 全局上下文放入UUID
-        String method = request.getMethod();
-        if("OPTIONS".equals(method)){
-            return true;
-        }
         String traceId = request.getHeader("traceId");
         traceId = StrUtil.isEmpty(traceId) ? UUID.randomUUID().toString() : traceId;
         MDC.put("traceId", traceId);
