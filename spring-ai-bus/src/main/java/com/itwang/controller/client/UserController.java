@@ -1,9 +1,11 @@
 package com.itwang.controller.client;
 
+import cn.dev33.satoken.stp.StpUtil;
 import com.itwang.common.result.CommonResult;
 import com.itwang.request.UserLoginRequest;
 import com.itwang.request.UserRegisterRequest;
 import com.itwang.response.client.ClientLoginRes;
+import com.itwang.response.client.ClientUserInfoResponse;
 import com.itwang.service.IUserService;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
@@ -18,6 +20,12 @@ public class UserController {
 
     @Resource
     private IUserService userService;
+
+    @Operation (summary = "用户信息")
+    @GetMapping("/info")
+    public CommonResult<ClientUserInfoResponse> userInfo(){
+        return CommonResult.success(userService.userInfo(StpUtil.getLoginIdAsLong()));
+    }
 
     @Operation(summary = "用户登录")
     @PostMapping("/login")

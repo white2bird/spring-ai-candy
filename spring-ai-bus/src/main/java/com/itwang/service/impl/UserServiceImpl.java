@@ -9,6 +9,7 @@ import com.itwang.dao.mapper.UserMapper;
 import com.itwang.request.UserLoginRequest;
 import com.itwang.request.UserRegisterRequest;
 import com.itwang.response.client.ClientLoginRes;
+import com.itwang.response.client.ClientUserInfoResponse;
 import com.itwang.service.IUserService;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import jakarta.annotation.Resource;
@@ -34,6 +35,12 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User> implements IU
 
     @Resource
     private LoginUserConverter loginUserConverter;
+
+    @Override
+    public ClientUserInfoResponse userInfo(Long userId) {
+        User userInfo = this.getById(userId);
+        return loginUserConverter.converterToClientUserInfoResponse(userInfo);
+    }
 
     @Override
     public ClientLoginRes userLogin(UserLoginRequest userLoginRequest) {

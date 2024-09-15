@@ -5,6 +5,7 @@ import com.baomidou.mybatisplus.extension.service.IService;
 import com.itwang.request.UserLoginRequest;
 import com.itwang.request.UserRegisterRequest;
 import com.itwang.response.client.ClientLoginRes;
+import com.itwang.response.client.ClientUserInfoResponse;
 
 /**
  * <p>
@@ -24,4 +25,5 @@ public interface IUserService extends IService<User> {
 
     void logout();
 
+    ClientUserInfoResponse userInfo(Long userId);
 }

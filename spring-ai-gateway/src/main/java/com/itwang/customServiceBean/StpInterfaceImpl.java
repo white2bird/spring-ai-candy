@@ -16,6 +16,7 @@ import java.util.List;
 public class StpInterfaceImpl implements StpInterface {
     @Override
     public List<String> getPermissionList(Object o, String s) {
+        log.info("current thread name {}", Thread.currentThread().getName());
         log.info("getPermissionList -- {}, {}", o, s);
         return List.of("all", "user", "admin");
     }

@@ -59,12 +59,12 @@ public class TestAuthFilter implements WebFilter {
             return WebFrameworkUtils.writeJSON(exchange, CommonResult.error(GlobalErrorCodeConstants.FORBIDDEN));
         }
         log.info("get token is {}", token);
-        String o = stringRedisTemplate.opsForValue().get(token);
-        JSONObject entries = JSONUtil.parseObj(o);
-        Object id = entries.get("id");
-        ServerHttpRequest build = exchange.getRequest().mutate().header("id", id.toString()).build();
+//        String o = stringRedisTemplate.opsForValue().get(token);
+//        JSONObject entries = JSONUtil.parseObj(o);
+//        Object id = entries.get("id");
+//        ServerHttpRequest build = exchange.getRequest().mutate().header("id", id.toString()).build();
 
 
-        return chain.filter(exchange.mutate().request(build).build());
+        return chain.filter(exchange);
     }
 }
