@@ -22,6 +22,6 @@ public class AiChatMessageSendReq {
     private String content;
 
     @Schema(description = "是否携带上下文", example = "true")
-    private Boolean useContext;
+    private Boolean useContext = false;
 
 }

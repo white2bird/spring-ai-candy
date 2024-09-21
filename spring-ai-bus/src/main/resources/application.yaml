@@ -26,7 +26,7 @@ candy:
   ai:
     deepseek:
       enable: "true"
-      api-key: "sk-c47ff1d99f6b4e408cf4cfa04cec1e3c"
+      api-key: "sk-f91846a6776b4a64baae2366e5ffc52d"
 
 
 # satoken配置

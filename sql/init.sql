@@ -82,3 +82,23 @@ CREATE TABLE `ai_chat_model`  (
                                   `tenant_id` bigint NOT NULL DEFAULT 0 COMMENT '租户编号',
                                   PRIMARY KEY (`id`) USING BTREE
 ) ENGINE = InnoDB AUTO_INCREMENT = 21 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_unicode_ci COMMENT = 'AI 聊天模型表';
+
+
+
+-- candy_ai.ModelPreviewFormItem definition
+
+CREATE TABLE `ModelPreviewFormItem` (
+                                        `id` bigint NOT NULL AUTO_INCREMENT,
+                                        `role_id` bigint NOT NULL COMMENT '模型角色id',
+                                        `type` varchar(100) NOT NULL COMMENT 'formItem类型，限制于text file等',
+                                        `name` varchar(100) NOT NULL COMMENT '列展示的名字，到时候前端传参数会用这个',
+                                        `placeHolder` varchar(100) DEFAULT NULL COMMENT '提示语',
+                                        `max` int DEFAULT NULL COMMENT '最大最小限制',
+                                        `min` int DEFAULT NULL COMMENT '最大最小限制',
+                                        `required` tinyint(1) DEFAULT NULL COMMENT '是否要求前端是否是必填项目',
+                                        PRIMARY KEY (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+
+INSERT INTO candy_ai.ModelPreviewFormItem (role_id,`type`,name,placeHolder,max,min,required) VALUES
+                                                                                                 (1,'text','老师角色','目前是几年级老师(三年级)',NULL,2,1),
+                                                                                                 (1,'text','该孩子平时表现','描述一下孩子的活泼度',NULL,NULL,0);
