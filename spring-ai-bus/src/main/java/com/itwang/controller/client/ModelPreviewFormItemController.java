@@ -1,7 +1,7 @@
 package com.itwang.controller.client;
 
+import cn.dev33.satoken.annotation.SaIgnore;
 import com.itwang.common.result.CommonResult;
-import com.itwang.dao.entity.ModelPreviewFormItem;
 import com.itwang.response.FormItemResponse;
 import com.itwang.service.IModelPreviewFormItemService;
 import io.swagger.v3.oas.annotations.Operation;
@@ -29,6 +29,7 @@ public class ModelPreviewFormItemController {
     private IModelPreviewFormItemService modelPreviewFormItemService;
 
 
+    @SaIgnore
     @Operation(summary = "根据角色id获取表单项信息")
     @GetMapping(value = "/getFormItemListByRoleId")
     public CommonResult<List<FormItemResponse>> getFormItemList(@RequestParam Long roleId)

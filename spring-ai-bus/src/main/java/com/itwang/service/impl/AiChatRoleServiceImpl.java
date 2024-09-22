@@ -1,10 +1,13 @@
 package com.itwang.service.impl;
 
+import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import com.itwang.dao.entity.AiChatRole;
 import com.itwang.dao.mapper.AiChatRoleMapper;
 import com.itwang.service.IAiChatRoleService;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import org.springframework.stereotype.Service;
+
+import java.util.List;
 
 /**
  * <p>
@@ -17,4 +20,9 @@ import org.springframework.stereotype.Service;
 @Service
 public class AiChatRoleServiceImpl extends ServiceImpl<AiChatRoleMapper, AiChatRole> implements IAiChatRoleService {
 
+
+    @Override
+    public List<AiChatRole> getAllRolesWithUsefulTabs() {
+        return this.list(new LambdaQueryWrapper<AiChatRole>().gt(AiChatRole::getRoleTypeId, 0).orderByAsc(AiChatRole::getId));
+    }
 }

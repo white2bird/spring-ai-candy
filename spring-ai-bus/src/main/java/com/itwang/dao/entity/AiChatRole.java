@@ -83,6 +83,10 @@ public class AiChatRole implements Serializable {
     @TableField("model_id")
     private Long modelId;
 
+
+    @TableField("role_type_id")
+    private Long roleTypeId;
+
     /**
      * 角色上下文 一段描述 你是谁谁谁，你应该怎么样
      */
