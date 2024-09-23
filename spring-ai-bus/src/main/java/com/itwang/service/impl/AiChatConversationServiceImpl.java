@@ -1,6 +1,7 @@
 package com.itwang.service.impl;
 
 import cn.dev33.satoken.stp.StpUtil;
+import cn.hutool.core.collection.CollUtil;
 import cn.hutool.core.lang.Assert;
 import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import com.itwang.converter.AiChatConversationConverter;
@@ -10,6 +11,7 @@ import com.itwang.dao.entity.AiChatRole;
 import com.itwang.dao.mapper.AiChatConversationMapper;
 import com.itwang.dao.mapper.AiChatModelMapper;
 import com.itwang.dao.mapper.AiChatRoleMapper;
+import com.itwang.globalInterceptor.aspect.redis.RedisLock;
 import com.itwang.request.AiChatConversationCreateRequest;
 import com.itwang.response.AiChatConversationRespVO;
 import com.itwang.service.IAiChatConversationService;
@@ -53,6 +55,7 @@ public class AiChatConversationServiceImpl extends ServiceImpl<AiChatConversatio
      * @return
      */
     @Override
+    @RedisLock(value = "#userId", expire = 10L)
     public Long createChatConversationMy(AiChatConversationCreateRequest createReqVO, Long userId) {
         AiChatRole chatRole = createReqVO.getRoleId() != null ? aiChatRoleMapper.selectById(createReqVO.getRoleId()) : null;
         // 角色可以默认优先指定大模型 选择一个大模型
@@ -96,5 +99,15 @@ public class AiChatConversationServiceImpl extends ServiceImpl<AiChatConversatio
             throw new RuntimeException("对话不存在");
         }
         return chatConversation;
+    }
+
+    @Override
+    public Long getDefaultChatConversationIdWithoutRole(Long userId) {
+        List<AiChatConversationRespVO> noRoleChatConversationList = getMyConversationList(null);
+        if(CollUtil.isNotEmpty(noRoleChatConversationList)){
+            return noRoleChatConversationList.get(0).getId();
+        }
+        // 默认创建一个
+        return createChatConversationMy(new AiChatConversationCreateRequest(), userId);
     }
 }

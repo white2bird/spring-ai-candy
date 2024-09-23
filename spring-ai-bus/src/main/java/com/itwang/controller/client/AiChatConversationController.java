@@ -3,16 +3,13 @@ package com.itwang.controller.client;
 import cn.dev33.satoken.stp.StpUtil;
 import com.itwang.common.result.CommonResult;
 import com.itwang.request.AiChatConversationCreateRequest;
-import com.itwang.request.AiChatMessageSendReq;
 import com.itwang.response.AiChatConversationRespVO;
-import com.itwang.response.AiChatMessageSendResponse;
 import com.itwang.service.IAiChatConversationService;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.annotation.Resource;
 import jakarta.validation.Valid;
 import org.springframework.web.bind.annotation.*;
-import org.springframework.stereotype.Controller;
 
 import java.util.List;
 
@@ -55,5 +52,13 @@ public class AiChatConversationController {
     public CommonResult<AiChatConversationRespVO> getCurrentConversation(@RequestParam Long id){
         return CommonResult.success(aiChatConversationService.getCurrentConversation(id));
     }
+
+    @GetMapping("/get-default-chat-conversation-id")
+    @Operation(summary = "获取默认的对话id")
+    public CommonResult<Long> getDefaultChatConversationId(){
+        return CommonResult.success(aiChatConversationService.getDefaultChatConversationIdWithoutRole(StpUtil.getLoginIdAsLong()));
+    }
+
+
 
 }

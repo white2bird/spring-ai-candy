@@ -31,9 +31,15 @@ public class AiChatMessageController {
     @Resource
     private AiChatMessageService chatMessageService;
 
-    @Operation(summary = "发送消息（流式）", description = "流式返回，响应较快")
-    @PostMapping(value = "/send-stream", produces = MediaType.TEXT_EVENT_STREAM_VALUE)
+    @Operation(summary = "发送消息（流式）指定角色的", description = "流式返回，响应较快")
+    @PostMapping(value = "/send-stream-appoint-role", produces = MediaType.TEXT_EVENT_STREAM_VALUE)
     public Flux<CommonResult<AiChatMessageSendResponse>> sendChatMessageStream(@Valid @RequestBody AiChatMessageSendReq sendReqVO) {
+        return chatMessageService.sendChatMessageStream(sendReqVO, StpUtil.getLoginIdAsLong());
+    }
+
+    @Operation(summary = "普通聊天的", description = "流式返回，响应较快")
+    @PostMapping(value = "/send-stream-normal", produces = MediaType.TEXT_EVENT_STREAM_VALUE)
+    public Flux<CommonResult<AiChatMessageSendResponse>> sendChatMessageStreamDefaultRole(@Valid @RequestBody AiChatMessageSendReq sendReqVO) {
         return chatMessageService.sendChatMessageStream(sendReqVO, StpUtil.getLoginIdAsLong());
     }
 
