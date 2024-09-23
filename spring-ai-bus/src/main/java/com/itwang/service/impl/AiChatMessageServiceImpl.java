@@ -90,7 +90,7 @@ public class AiChatMessageServiceImpl implements AiChatMessageService {
                     .receive(responseMsg).build());
         }).doOnComplete(()->{
             MDC.put("traceId", traceId);
-            aiChatMessageMapper.updateById(AiChatMessage.builder().id(assistantMessage.getId()).content(contentBuffer.toString()).build());
+            aiChatMessageMapper.updateById(AiChatMessage.builder().id(assistantMessage.getId()).content(StrUtil.maxLength(contentBuffer.toString(), 2048-4)).build());
         }).doOnError(throwable->{
             aiChatMessageMapper.updateById(AiChatMessage.builder().id(assistantMessage.getId()).content(throwable.getMessage()).build());
         });
