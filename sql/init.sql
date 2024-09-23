@@ -1,5 +1,5 @@
 -- candy_ai.ModelPreviewFormItem definition
-
+DROP TABLE if exists `ModelPreviewFormItem`;
 CREATE TABLE `ModelPreviewFormItem` (
                                         `id` bigint NOT NULL AUTO_INCREMENT,
                                         `role_id` bigint NOT NULL COMMENT '模型角色id',
@@ -14,7 +14,7 @@ CREATE TABLE `ModelPreviewFormItem` (
 
 
 -- candy_ai.ai_api_key definition
-
+DROP TABLE if exists `ai_api_key`;
 CREATE TABLE `ai_api_key` (
                               `id` bigint NOT NULL AUTO_INCREMENT COMMENT '编号',
                               `name` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL COMMENT '名称',
@@ -27,7 +27,7 @@ CREATE TABLE `ai_api_key` (
 
 
 -- candy_ai.ai_chat_conversation definition
-
+DROP TABLE if exists `ai_chat_conversation`;
 CREATE TABLE `ai_chat_conversation` (
                                         `id` bigint NOT NULL AUTO_INCREMENT COMMENT '对话编号',
                                         `user_id` bigint NOT NULL COMMENT '用户编号',
@@ -52,7 +52,7 @@ CREATE TABLE `ai_chat_conversation` (
 
 
 -- candy_ai.ai_chat_message definition
-
+DROP TABLE if exists `ai_chat_message`;
 CREATE TABLE `ai_chat_message` (
                                    `id` bigint NOT NULL AUTO_INCREMENT COMMENT '消息编号',
                                    `conversation_id` bigint NOT NULL COMMENT '对话编号',
@@ -75,7 +75,7 @@ CREATE TABLE `ai_chat_message` (
 
 
 -- candy_ai.ai_chat_model definition
-
+DROP TABLE if exists `ai_chat_model`;
 CREATE TABLE `ai_chat_model` (
                                  `id` bigint NOT NULL AUTO_INCREMENT COMMENT '编号',
                                  `key_id` bigint NOT NULL COMMENT 'API 秘钥编号',
@@ -98,7 +98,7 @@ CREATE TABLE `ai_chat_model` (
 
 
 -- candy_ai.ai_chat_role definition
-
+DROP TABLE if exists `ai_chat_role`;
 CREATE TABLE `ai_chat_role` (
                                 `id` bigint NOT NULL AUTO_INCREMENT COMMENT '角色编号',
                                 `name` varchar(128) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL COMMENT '角色名称',
@@ -117,7 +117,7 @@ CREATE TABLE `ai_chat_role` (
 
 
 -- candy_ai.sys_role definition
-
+DROP TABLE if exists `sys_role`;
 CREATE TABLE `sys_role` (
                             `id` bigint NOT NULL AUTO_INCREMENT,
                             `role` varchar(100) NOT NULL,
@@ -129,7 +129,7 @@ CREATE TABLE `sys_role` (
 
 
 -- candy_ai.`user` definition
-
+DROP TABLE if exists `sys_role`;
 CREATE TABLE `user` (
                         `id` int NOT NULL AUTO_INCREMENT COMMENT '主键id',
                         `nickname` varchar(255) NOT NULL COMMENT '用户名称',
@@ -148,7 +148,7 @@ CREATE TABLE `user` (
 
 
 -- candy_ai.user_role_relation definition
-
+DROP TABLE if exists `user_role_relation`;
 CREATE TABLE `user_role_relation` (
                                       `id` bigint NOT NULL,
                                       `user_id` bigint NOT NULL,
@@ -158,7 +158,7 @@ CREATE TABLE `user_role_relation` (
 
 
 -- candy_ai.ai_chat_role_type definition
-
+DROP TABLE if exists `ai_chat_role_type`;
 CREATE TABLE `ai_chat_role_type` (
                                      `id` bigint NOT NULL AUTO_INCREMENT,
                                      `name` varchar(100) NOT NULL,
